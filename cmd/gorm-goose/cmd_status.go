@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
-	goose "github.com/Altoros/gorm-goose/lib/gorm-goose"
+	goose "github.com/pyrotag/gorm-goose/lib/gorm-goose"
 	"gorm.io/gorm"
 )
 
