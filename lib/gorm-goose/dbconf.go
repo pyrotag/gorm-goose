@@ -77,14 +77,14 @@ func newDBDriver(name, open string) DBDriver {
 
 	switch name {
 	case "postgres":
-		d.Import = "gorm.io/gorm/dialects/postgres"
+		d.Import = "gorm.io/driver/postgres"
 
 	case "mysql":
-		d.Import = "gorm.io/gorm/dialects/mysql"
+		d.Import = "gorm.io/driver/mysql"
 		d.OpenStr = d.OpenStr + "?charset=utf8&parseTime=True&loc=Local"
 
 	case "sqlite3":
-		d.Import = "gorm.io/gorm/dialects/sqlite"
+		d.Import = "gorm.io/driver/sqlite"
 	}
 
 	return d

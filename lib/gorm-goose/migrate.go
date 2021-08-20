@@ -13,9 +13,9 @@ import (
 	"time"
 
 	"gorm.io/gorm"
-	_ "gorm.io/gorm/dialects/mysql"
-	_ "gorm.io/gorm/dialects/postgres"
-	_ "gorm.io/gorm/dialects/sqlite"
+	_ "gorm.io/driver/mysql"
+	_ "gorm.io/driver/postgres"
+	_ "gorm.io/driver/sqlite"
 )
 
 var (
