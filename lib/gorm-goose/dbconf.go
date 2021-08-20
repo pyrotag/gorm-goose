@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 	"github.com/kylelemons/go-gypsy/yaml"
 )
 
@@ -77,14 +77,14 @@ func newDBDriver(name, open string) DBDriver {
 
 	switch name {
 	case "postgres":
-		d.Import = "github.com/jinzhu/gorm/dialects/postgres"
+		d.Import = "gorm.io/gorm/dialects/postgres"
 
 	case "mysql":
-		d.Import = "github.com/jinzhu/gorm/dialects/mysql"
+		d.Import = "gorm.io/gorm/dialects/mysql"
 		d.OpenStr = d.OpenStr + "?charset=utf8&parseTime=True&loc=Local"
 
 	case "sqlite3":
-		d.Import = "github.com/jinzhu/gorm/dialects/sqlite"
+		d.Import = "gorm.io/gorm/dialects/sqlite"
 	}
 
 	return d

@@ -1,8 +1,8 @@
 # gorm-goose
 
-This is a fork of [https://bitbucket.org/liamstask/goose](https://bitbucket.org/liamstask/goose) for [gorm](https://github.com/jinzhu/gorm).
+This is a fork of [https://bitbucket.org/liamstask/goose](https://bitbucket.org/liamstask/goose) for [gorm](https://gorm.io/gorm).
 
-gorm-goose is a database migration tool for [gorm](https://github.com/jinzhu/gorm).
+gorm-goose is a database migration tool for [gorm](https://gorm.io/gorm).
 Currently, available drivers are: "postgres", "mysql", or "sqlite3".
 
 You can manage your database's evolution by creating incremental SQL or Go scripts.
@@ -156,7 +156,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 func Up_20130106222315(txn *gorm.DB) {

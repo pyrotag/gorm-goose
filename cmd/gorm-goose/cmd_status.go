@@ -7,7 +7,7 @@ import (
 	"time"
 
 	goose "github.com/Altoros/gorm-goose/lib/gorm-goose"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 var statusCmd = &Command{

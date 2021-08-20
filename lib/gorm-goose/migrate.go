@@ -12,10 +12,10 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"gorm.io/gorm"
+	_ "gorm.io/gorm/dialects/mysql"
+	_ "gorm.io/gorm/dialects/postgres"
+	_ "gorm.io/gorm/dialects/sqlite"
 )
 
 var (
@@ -377,7 +377,7 @@ var goMigrationTemplate = template.Must(template.New("goose.go-migration").Parse
 package main
 
 import (
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 // Up is executed when this migration is applied
