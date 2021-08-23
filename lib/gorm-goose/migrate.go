@@ -12,10 +12,10 @@ import (
 	"text/template"
 	"time"
 
-	"gorm.io/gorm"
 	_ "gorm.io/driver/mysql"
 	_ "gorm.io/driver/postgres"
 	_ "gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 var (
@@ -51,10 +51,11 @@ func newMigration(v int64, src string) *Migration {
 func RunMigrations(conf *DBConf, migrationsDir string, target int64) (err error) {
 
 	db, err := OpenDBFromDBConf(conf)
+	sqlDb, err := db.DB()
 	if err != nil {
 		return err
 	}
-	defer db.Close()
+	defer sqlDb.Close()
 
 	return RunMigrationsOnDb(conf, migrationsDir, target, db)
 }
@@ -240,7 +241,7 @@ func createVersionTable(conf *DBConf, db *gorm.DB) error {
 		return txn.Error
 	}
 
-	if err := txn.CreateTable(&MigrationRecord{}).Error; err != nil {
+	if err := txn.Migrator().CreateTable(&MigrationRecord{}); err != nil {
 		txn.Rollback()
 		return err
 	}
@@ -259,10 +260,11 @@ func createVersionTable(conf *DBConf, db *gorm.DB) error {
 func GetDBVersion(conf *DBConf) (version int64, err error) {
 
 	db, err := OpenDBFromDBConf(conf)
+	sqlDb, err := db.DB()
 	if err != nil {
 		return -1, err
 	}
-	defer db.Close()
+	defer sqlDb.Close()
 
 	version, err = EnsureDBVersion(conf, db)
 	if err != nil {

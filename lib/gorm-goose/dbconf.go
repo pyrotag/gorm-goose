@@ -2,11 +2,14 @@ package gormgoose
 
 import (
 	"fmt"
+	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
 	"os"
 	"path/filepath"
 
-	"gorm.io/gorm"
 	"github.com/kylelemons/go-gypsy/yaml"
+	"gorm.io/gorm"
 )
 
 // DBDriver encapsulates the info needed to work with
@@ -15,6 +18,7 @@ type DBDriver struct {
 	Name    string
 	OpenStr string
 	Import  string
+	OpenConn gorm.Dialector
 }
 
 type DBConf struct {
@@ -78,13 +82,17 @@ func newDBDriver(name, open string) DBDriver {
 	switch name {
 	case "postgres":
 		d.Import = "gorm.io/driver/postgres"
+		d.OpenConn = postgres.Open(d.OpenStr)
 
 	case "mysql":
 		d.Import = "gorm.io/driver/mysql"
 		d.OpenStr = d.OpenStr + "?charset=utf8&parseTime=True&loc=Local"
+		d.OpenConn = mysql.Open(d.OpenStr)
+
 
 	case "sqlite3":
 		d.Import = "gorm.io/driver/sqlite"
+		d.OpenConn = sqlite.Open(d.OpenStr)
 	}
 
 	return d
@@ -100,7 +108,7 @@ func (drv *DBDriver) IsValid() bool {
 //
 // Callers must Close() the returned DB.
 func OpenDBFromDBConf(conf *DBConf) (*gorm.DB, error) {
-	db, err := gorm.Open(conf.Driver.Name, conf.Driver.OpenStr)
+	db, err := gorm.Open(conf.Driver.OpenConn, &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}
