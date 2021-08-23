@@ -26,7 +26,7 @@ var (
 type MigrationRecord struct {
 	ID        uint `gorm:"primary_key"`
 	VersionId int64
-	TStamp    time.Time `gorm:"default: now()"`
+	TStamp    time.Time 
 	IsApplied bool      // was this a result of up() or down()
 }
 
