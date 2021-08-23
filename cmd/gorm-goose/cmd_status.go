@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"path/filepath"
@@ -39,10 +40,11 @@ func statusRun(cmd *Command, args ...string) {
 	}
 
 	db, e := goose.OpenDBFromDBConf(conf)
+	sqlDb, e := db.DB()
 	if e != nil {
 		log.Fatal("couldn't open DB:", e)
 	}
-	defer db.Close()
+	defer sqlDb.Close()
 
 	// must ensure that the version table exists if we're running on a pristine DB
 	if _, e := goose.EnsureDBVersion(conf, db); e != nil {
@@ -61,7 +63,7 @@ func printMigrationStatus(db *gorm.DB, version int64, script string) {
 	row := goose.MigrationRecord{}
 	result := db.Where("version_id = ?", version).Order("t_stamp desc").First(&row)
 
-	if result.Error != nil && !result.RecordNotFound() {
+	if result.Error != nil && errors.Is(result.Error, gorm.ErrRecordNotFound) {
 		log.Fatal(result.Error)
 	}
 
