@@ -1,6 +1,6 @@
 # gorm-goose
 
-This is a fork of [https://bitbucket.org/liamstask/goose](https://bitbucket.org/liamstask/goose) for [gorm](https://gorm.io/gorm).
+This is a fork of [https://bitbucket.org/liamstask/goose](https://bitbucket.org/liamstask/goose) for [gorm](https://gorm.io/gorm) and [Altoros/gorm-goose](https://github.com/Altoros/gorm-goose) and to support gorm 1.20.+ or gorm 2. 
 
 gorm-goose is a database migration tool for [gorm](https://gorm.io/gorm).
 Currently, available drivers are: "postgres", "mysql", or "sqlite3".
