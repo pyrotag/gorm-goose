@@ -26,7 +26,7 @@ var (
 type MigrationRecord struct {
 	ID        uint `gorm:"primary_key"`
 	VersionId int64
-	TStamp    time.Time 
+	TStamp    time.Time `gorm:"autoCreateTime"`
 	IsApplied bool      // was this a result of up() or down()
 }
 
@@ -194,10 +194,9 @@ func NumericComponent(name string) (int64, error) {
 // EnsureDBVersion retrieve the current version for this DB.
 // Create and initialize the DB version table if it doesn't exist.
 func EnsureDBVersion(conf *DBConf, db *gorm.DB) (int64, error) {
-	rows := []MigrationRecord{}
-	err := db.Order("id desc").Find(&rows).Error
-
-	if err != nil {
+	var rows []MigrationRecord
+	result := db.Order("id desc").Find(&rows)
+	if result.Error != nil {
 		return 0, createVersionTable(conf, db)
 	}
 
